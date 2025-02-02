@@ -12,6 +12,7 @@ import { BackgroundGradientAnimation } from "./GradientBg";
 import GridGlobe from "./GridGlobe";
 import animationData from "@/data/confetti.json";
 import MagicButton from "../MagicButton";
+import Image from "next/image";
 
 export const BentoGrid = ({
   className,
@@ -68,7 +69,7 @@ export const BentoGridItem = ({
   };
 
   const handleCopy = () => {
-    const text = "hsu@jsmastery.pro";
+    const text = "prto2802@gmail.com";
     navigator.clipboard.writeText(text);
     setCopied(true);
   };
@@ -92,10 +93,12 @@ export const BentoGridItem = ({
       <div className={`${id === 6 && "flex justify-center"} h-full`}>
         <div className="w-full h-full absolute">
           {img && (
-            <img
+            <Image
               src={img}
               alt={img}
               className={cn(imgClassName, "object-cover object-center ")}
+              width={220}
+              height={220}
             />
           )}
         </div>
@@ -105,10 +108,11 @@ export const BentoGridItem = ({
           } `}
         >
           {spareImg && (
-            <img
+            <Image
               src={spareImg}
               alt={spareImg}
-              //   width={220}
+              width={220}
+              height={220}
               className="object-cover object-center w-full h-full"
             />
           )}

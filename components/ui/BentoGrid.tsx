@@ -4,13 +4,13 @@ import { useState } from "react";
 import { IoCopyOutline } from "react-icons/io5";
 
 // Also install this npm i --save-dev @types/react-lottie
-import Lottie from "react-lottie";
+// import Lottie from "react-lottie";
 
 import { cn } from "@/lib/utils";
 
 import { BackgroundGradientAnimation } from "./GradientBg";
 
-import GridGlobe from "./GridGlobe";
+// import GridGlobe from "./GridGlobe";
 
 import animationData from "@/data/confetti.json";
 import MagicButton from "../MagicButton";
@@ -72,8 +72,27 @@ export const BentoGridItem = ({
 
   const handleCopy = () => {
     const text = "prto2802@gmail.com";
-    navigator.clipboard.writeText(text);
-    setCopied(true);
+
+    if (navigator?.clipboard?.writeText) {
+      // Modern Clipboard API (preferred)
+      navigator.clipboard
+        .writeText(text)
+        .then(() => setCopied(true))
+        .catch((err) => console.error("Clipboard copy failed", err));
+    } else {
+      // Fallback for unsupported browsers
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand("copy");
+        setCopied(true);
+      } catch (err) {
+        console.error("Fallback copy failed", err);
+      }
+      document.body.removeChild(textarea);
+    }
   };
 
   return (
@@ -189,7 +208,7 @@ export const BentoGridItem = ({
                   copied ? "block" : "block"
                 }`}
               >
-                <Lottie options={defaultOptions} height={200} width={400} />
+                {/* <Lottie options={defaultOptions} height={200} width={400} /> */}
               </div>
 
               <MagicButton
